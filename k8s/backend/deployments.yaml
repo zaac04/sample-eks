@@ -17,8 +17,15 @@ spec:
         service: backend
     spec:
       containers:
-        image: issac04/backend
+      - image: issac04/backend
         name: backend
-        port:
-          - containerPort: 5000
+        ports:
+        - containerPort: 5000
+        resources:
+          limits:
+            cpu: "500m"  # Set CPU limit to 500 millicpu
+            memory: "512Mi"  # Set memory limit to 512 Mebibytes
+          requests:
+            cpu: "100m"  # Request 100 millicpu
+            memory: "256Mi"  # Request 256 Mebibytes
       restartPolicy: Always

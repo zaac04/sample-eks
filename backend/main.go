@@ -11,30 +11,29 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func init(){
+func init() {
 	err := godotenv.Load("config.env")
-	if err!=nil {
+	if err != nil {
 		fmt.Println(err)
 	}
 
 }
 
-func main (){
+func main() {
 
 	db.Pg.Connect()
 	db.Pg.Client.AutoMigrate(models.Todo{})
-
 
 	router := chi.NewRouter()
 	router.Use(CORS)
 	router.Group(func(r chi.Router) {
 		r.Post("/add", handlers.AddTodo)
-		r.Get("/get",handlers.GetTodos)
+		r.Get("/get", handlers.GetTodos)
 	})
 	http.ListenAndServe(":5000", router)
 }
 
-func CORS(next http.Handler)  http.Handler {
+func CORS(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Add("Access-Control-Allow-Origin", "*")
 		w.Header().Add("Access-Control-Allow-Credentials", "true")
@@ -47,6 +46,5 @@ func CORS(next http.Handler)  http.Handler {
 		}
 		next.ServeHTTP(w, r)
 	})
-  
 
-  }
+}

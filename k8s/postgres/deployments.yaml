@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: microservice-app-example
-  name: pg_db
+  name: pg-db
   namespace: kube-system
 spec:
   replicas: 1
@@ -14,15 +14,17 @@ spec:
     metadata:
       labels:
         app: microservice-app-example
-        service: pg_db
+        service: pg-db
     spec:
       containers:
-        - env:
-            -POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=8242
-            - POSTGRES_DB=whitelake
+        - name: pg-db
           image: postgres:alpine
-          name: pg_db
           ports:
             - containerPort: 5432
-      restartPolicy: Always
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: "8242"
+            - name: POSTGRES_DB
+              value: whitelake

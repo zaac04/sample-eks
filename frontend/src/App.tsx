@@ -9,9 +9,11 @@ function App() {
   const [click, setClick] = useState(true);
 
   async function get() {
-    let res = await (await axios.get("http://sample-backend-1:5000/get")).data;
-
-    setTodos(res);
+    
+    let res = await (await axios.get("http://k8s-kubesyst-backend-219ac3e0df-917590178.eu-central-1.elb.amazonaws.com/get"));
+    setTodos(res.data);
+    console.log(res.data)
+    
   }
   useEffect(() => {
     get();
@@ -31,7 +33,7 @@ function App() {
             onClick={(e) => {
               e.preventDefault();
               setClick(!click);
-              axios.post("http://backend:5000/add", {
+              axios.post("http://k8s-kubesyst-backend-219ac3e0df-917590178.eu-central-1.elb.amazonaws.com/add", {
                 entry: input,
               });
             }}

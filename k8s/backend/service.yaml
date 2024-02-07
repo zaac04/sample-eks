@@ -8,5 +8,8 @@ metadata:
 spec:
   ports:
     - port: 5000
+      targetPort: 5000
+      protocol: TCP
   selector:
+    app: microservice-app-example
     service: backend

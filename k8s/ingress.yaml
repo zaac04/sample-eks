@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: backend
+  namespace: kube-system
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+   # alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-2:438990558550:certificate/a4b12880-df79-4bb1-ba90-fb7c38af685f
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 5000
+
