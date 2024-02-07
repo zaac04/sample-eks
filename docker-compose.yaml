@@ -1,0 +1,29 @@
+version: "3.8"
+services:
+  backend:
+    build:
+      context: "./backend"
+      dockerfile: DockerFile
+    ports:
+      - "5000:5000"
+
+  pg_db:
+    image: postgres:alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=8242
+      - POSTGRES_DB=whitelake
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+
+  frontend:
+    build:
+      context: "./frontend"
+      dockerfile: DockerFile
+    ports:
+      - "5173:5173"
+
+volumes:
+  postgres-db:

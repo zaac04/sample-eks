@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: microservice-app-example
+  name: pg_db
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: microservice-app-example
+  template:
+    metadata:
+      labels:
+        app: microservice-app-example
+        service: pg_db
+    spec:
+      containers:
+        - env:
+            -POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=8242
+            - POSTGRES_DB=whitelake
+          image: postgres:alpine
+          name: pg_db
+          ports:
+            - containerPort: 5432
+      restartPolicy: Always
